@@ -2,21 +2,15 @@
   export let images;
 
   let centerIndex = 0;
-  let leftIndex = images.length - 1;
-  let rightIndex = 1;
+  $: leftIndex = (centerIndex - 1 + images.length) % images.length;
+  $: rightIndex = (centerIndex + 1) % images.length;
 
-  function mveLeft() {
-    const length = images.length;
-    centerIndex = (centerIndex - 1 + length) % length;
-    leftIndex = (centerIndex - 1 + length) % length;
-    rightIndex = (centerIndex + 1) % length;
+  function moveLeft() {
+    centerIndex = (centerIndex - 1 + images.length) % images.length;
   }
 
   function moveRight() {
-    const length = images.images.length;
-    centerIndex = (centerIndex + 1) % length;
-    leftIndex = (centerIndex - 1 + length) % length;
-    rightIndex = (centerIndex + 1) % length;
+    centerIndex = (centerIndex + 1) % images.length;
   }
 </script>
 
@@ -26,18 +20,14 @@
     alt="スライダー画像（左）"
     class="slider-item left"
   />
+  <img src={images[centerIndex]} alt="スライダー画像" class="slider-item" />
   <img
-    src={images.images[sliderCenterIndex]}
-    alt="スライダー画像"
-    class="slider-item"
-  />
-  <img
-    src={images.images[sliderRightIndex]}
+    src={images[rightIndex]}
     alt="スライダー画像（右）"
     class="slider-item right"
   />
-  <button class="slider-left-button" on:click={sliderMoveLeft}>←</button>
-  <button class="slider-right-button" on:click={sliderMoveRight}>→</button>
+  <button class="slider-left-button" on:click={moveLeft}>←</button>
+  <button class="slider-right-button" on:click={moveRight}>→</button>
 </div>
 
 <style>
